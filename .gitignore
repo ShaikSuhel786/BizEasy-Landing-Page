@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.env
+.env.local
+.env.production
+.claude
+.agents
+.ai-session
+agent/
+docs/
+.impeccable/
+mockify/
+dist/

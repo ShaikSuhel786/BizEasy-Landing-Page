@@ -1,0 +1,59 @@
+{
+  "color": {
+    "primitive": {
+      "brand": {
+        "blue500": "#4155E5",
+        "blue400": "#3995FB",
+        "orange500": "#F47745"
+      },
+      "neutral": {
+        "ink950": "#111522",
+        "ink800": "#252B38",
+        "slate600": "#667085",
+        "mist100": "#E7EAF0",
+        "cloud050": "#F5F6F8",
+        "white": "#FFFFFF"
+      },
+      "semantic": {
+        "success": "#16865F",
+        "warning": "#D59620",
+        "error": "#D84A4A",
+        "info": "#4187E8"
+      }
+    },
+    "semantic": {
+      "brand.primary": "#4155E5",
+      "brand.counterpoint": "#F47745",
+      "brand.primaryHover": "#3995FB",
+      "surface.default": "#F5F6F8",
+      "surface.raised": "#FFFFFF",
+      "text.primary": "#111522",
+      "text.secondary": "#667085",
+      "border.default": "#E7EAF0",
+      "action.primary": "#4155E5",
+      "action.primaryHover": "#3995FB",
+      "status.success": "#16865F",
+      "status.warning": "#D59620",
+      "status.error": "#D84A4A",
+      "status.info": "#4187E8"
+    }
+  },
+  "shape": {
+    "radius.card": "16px",
+    "radius.input": "10px",
+    "radius.pill": "999px"
+  },
+  "motion": {
+    "intensity": 6,
+    "signature": "floating interaction -> directional movement -> product integration -> settle"
+  },
+  "layout": {
+    "maxWidth": "1400px",
+    "mobileBreakpoint": "768px"
+  },
+  "typography": {
+    "display": "Geist Sans",
+    "body": "Geist Sans",
+    "mono": "Geist Mono"
+  }
+}
