@@ -1,55 +1,39 @@
 import React from "react";
-import { Battery, Wifi, Signal } from "lucide-react";
 
-export function PhoneMockup({ children, hideUI = false }: { children: React.ReactNode, hideUI?: boolean }) {
+interface PhoneMockupProps {
+  children: React.ReactNode;
+  hideUI?: boolean;
+}
+
+export function PhoneMockup({ children, hideUI = false }: PhoneMockupProps) {
   return (
-    // We make this a container so we can use cqw for border-radius
+    // Exact bounding box of the iPhone screen measured directly from phone-1.png (296x652 in 1280x853)
     <div 
-      className="absolute z-50 flex flex-col justify-end pointer-events-none"
+      className="absolute z-50 pointer-events-none select-none"
       style={{
-        top: '13.5%',
-        left: '37.25%',
-        width: '25.5%',
-        height: '74%',
+        top: '12.19%',
+        left: '38.44%',
+        width: '23.12%',
+        height: '76.44%',
         containerType: 'inline-size'
       }}
     >
       <div 
-        className="absolute inset-0 border-x-4 border-t-4 border-transparent"
+        className="relative w-full h-full overflow-hidden"
         style={{
-          borderTopLeftRadius: '13cqw',
-          borderTopRightRadius: '13cqw',
-          borderBottomLeftRadius: '0',
-          borderBottomRightRadius: '0',
-        }}
-      />
-      <div 
-        className="absolute inset-0 flex flex-col items-center px-2 sm:px-4"
-        style={{
-          borderTopLeftRadius: '13cqw',
-          borderTopRightRadius: '13cqw',
-          borderBottomLeftRadius: '0',
-          borderBottomRightRadius: '0',
+          borderRadius: '13cqw',
+          clipPath: 'inset(0 0 0 0 round 13cqw)'
         }}
       >
-        {/* --- STATUS BAR --- */}
-
-        {/* --- CHILDREN (Scrollable/Masked Content) --- */}
-        <div 
-          className="absolute inset-0 flex flex-col items-center px-2 sm:px-4"
-          style={{
-            paddingTop: '12%',
-            paddingBottom: '20%',
-            clipPath: 'inset(0 0 0 0 round 15cqw)' // Masks children strictly to the phone screen
-          }}
-        >
+        {/* Screen Children (Edge-to-Edge) */}
+        <div className="absolute inset-0 w-full h-full flex flex-col">
           {children}
         </div>
 
-        {/* --- HOME INDICATOR --- */}
+        {/* iOS Home Indicator Bar */}
         {!hideUI && (
-          <div className="absolute bottom-2 inset-x-0 flex justify-center pointer-events-none z-20">
-            <div className="w-[35%] h-1 sm:h-1.5 bg-[#0f172a] rounded-full opacity-80" />
+          <div className="absolute bottom-1.5 inset-x-0 flex justify-center pointer-events-none z-30">
+            <div className="w-[36%] h-[3px] bg-[#0f172a]/70 rounded-full" />
           </div>
         )}
       </div>

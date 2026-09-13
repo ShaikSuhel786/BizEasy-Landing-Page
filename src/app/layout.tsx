@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Fraunces, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 const fraunces = Fraunces({ 
   subsets: ["latin"], 
   variable: "--font-fraunces",
@@ -14,6 +15,13 @@ export const metadata: Metadata = {
   description: "Never lose a WhatsApp order again",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${fraunces.variable} font-sans antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${fraunces.variable} ${outfit.variable} font-sans antialiased overflow-x-hidden`} suppressHydrationWarning>
         {children}
       </body>
     </html>

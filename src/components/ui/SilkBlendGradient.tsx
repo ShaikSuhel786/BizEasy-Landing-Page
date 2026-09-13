@@ -1,7 +1,6 @@
 export default function SilkBlendGradient({ visible }: { visible: boolean }) {
   return (
     <>
-      {/* 21st.dev Gradient Background Layer */}
       <div 
         className={`absolute inset-0 z-0 transition-opacity duration-1000 ${visible ? "opacity-100" : "opacity-0"}`}
         style={{
@@ -12,7 +11,6 @@ export default function SilkBlendGradient({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* subtle radial gradient for depth */}
       {visible && (
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[600px] z-0"
