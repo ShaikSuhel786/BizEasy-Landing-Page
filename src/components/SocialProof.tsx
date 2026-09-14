@@ -18,7 +18,7 @@ export default function SocialProof() {
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden z-20">
+    <section id="customers" className="py-24 bg-white relative overflow-hidden z-20 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 md:px-6 mb-12">
         <p className="text-center text-sm font-semibold tracking-widest text-gray-400 uppercase">
           Trusted by forward-thinking brands

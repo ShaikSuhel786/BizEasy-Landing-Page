@@ -186,7 +186,7 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
       {/* Fullscreen Overlay using Portal to bypass z-index and overflow constraints */}
       {mounted && createPortal(
         <section ref={overlayRef} className="fullscreen-menu-container dark">
-          <div className="nav-overlay-wrapper fixed inset-0 z-[110] w-full h-full pointer-events-auto" style={{ display: 'none' }}>
+          <div data-lenis-prevent className="nav-overlay-wrapper fixed inset-0 z-[110] w-full h-full pointer-events-auto" style={{ display: 'none' }}>
             <div className="overlay absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={closeMenu}></div>
             
             <nav className="menu-content absolute top-0 right-0 h-full w-full sm:w-[85vw] sm:max-w-md overflow-hidden shadow-2xl border-l border-border rounded-l-2xl sm:rounded-none">
@@ -247,32 +247,26 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
                 <ul className="menu-list flex flex-col gap-5">
                   {/* Note: overflow-hidden on li masks the nav-link-text while it animates from yPercent 140! */}
                   <li className="menu-list-item relative group overflow-hidden" data-shape="1">
-                    <a href="#about" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
-                      <div className="nav-link-text inline-block origin-bottom-left m-0">About us</div>
+                    <a href="#how-it-works" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
+                      <div className="nav-link-text inline-block origin-bottom-left m-0">How it works</div>
                       <div className="nav-link-hover-bg"></div>
                     </a>
                   </li>
                   <li className="menu-list-item relative group overflow-hidden" data-shape="2">
-                    <a href="#work" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
-                      <div className="nav-link-text inline-block origin-bottom-left m-0">Our work</div>
+                    <a href="#features" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
+                      <div className="nav-link-text inline-block origin-bottom-left m-0">Features</div>
                       <div className="nav-link-hover-bg"></div>
                     </a>
                   </li>
                   <li className="menu-list-item relative group overflow-hidden" data-shape="3">
-                    <a href="#services" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
-                      <div className="nav-link-text inline-block origin-bottom-left m-0">Services</div>
+                    <a href="#customers" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
+                      <div className="nav-link-text inline-block origin-bottom-left m-0">Customers</div>
                       <div className="nav-link-hover-bg"></div>
                     </a>
                   </li>
                   <li className="menu-list-item relative group overflow-hidden" data-shape="4">
-                    <a href="#blog" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
-                      <div className="nav-link-text inline-block origin-bottom-left m-0" data-menu-fade>Blog</div>
-                      <div className="nav-link-hover-bg"></div>
-                    </a>
-                  </li>
-                  <li className="menu-list-item relative group overflow-hidden" data-shape="5">
-                    <a href="#contact" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
-                      <div className="nav-link-text inline-block origin-bottom-left m-0">Contact us</div>
+                    <a href="#features" onClick={closeMenu} className="nav-link block w-full text-5xl sm:text-6xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors duration-300 drop-shadow-sm">
+                      <div className="nav-link-text inline-block origin-bottom-left m-0" data-menu-fade>Pricing</div>
                       <div className="nav-link-hover-bg"></div>
                     </a>
                   </li>

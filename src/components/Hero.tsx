@@ -41,23 +41,21 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           trigger: stageRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 0.3,
+          scrub: true,
         },
-        scale: 0.94,
-        borderBottomLeftRadius: "64px",
-        borderBottomRightRadius: "64px",
+        scale: 0.95,
         ease: "none"
       });
 
-      // 2. Parallax Phone/Hand with momentum scrub
+      // 2. Parallax Phone/Hand with direct scrub
       gsap.to(phoneWrapperRef.current, {
         scrollTrigger: {
           trigger: stageRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 0.8,
+          scrub: true,
         },
-        y: -150,
+        y: -140,
         ease: "none"
       });
     }
@@ -69,7 +67,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
       <div className="relative w-full flex flex-col items-center justify-start z-0">
         <div 
           ref={bgRef}
-          className="w-full origin-top flex flex-col items-center overflow-hidden relative bg-[#f4f5f6] min-h-[100vh]"
+          className="w-full origin-top flex flex-col items-center overflow-hidden relative bg-[#f4f5f6] min-h-[100vh] rounded-b-[48px] sm:rounded-b-[64px] will-change-transform"
         >
           <SilkBlendGradient visible={stage >= 2} />
 
@@ -155,7 +153,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
 
           {/* STAGE 2: Phone Mockup */}
           <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible -mt-8 sm:-mt-10 lg:-mt-14 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px]">
-            <div ref={phoneWrapperRef} className="relative shrink-0 w-[760px] sm:w-[860px] lg:w-[960px] aspect-[1280/853]">
+            <div ref={phoneWrapperRef} className="relative shrink-0 w-[760px] sm:w-[860px] lg:w-[960px] aspect-[1280/853] will-change-transform">
               {/* Hand Holding Phone Asset */}
               <AnimatePresence>
                 {stage >= 2 && (

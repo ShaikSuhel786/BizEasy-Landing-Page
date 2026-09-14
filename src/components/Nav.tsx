@@ -26,14 +26,26 @@ export default function Nav({ stage }: { stage: number }) {
   const desktopCtaRef = useRef<HTMLDivElement>(null);
   const mobileCtaRef = useRef<HTMLDivElement>(null);
   
-  // Scroll Listener
+  // Scroll Listener - Only re-render React state when threshold values actually change
   useEffect(() => {
     let ticking = false;
+    let lastScrolled = false;
+    let lastPastHero = false;
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20);
-          setPastHero(window.scrollY > (window.innerHeight * 0.7));
+          const isScrolled = window.scrollY > 20;
+          const isPast = window.scrollY > (window.innerHeight * 0.65);
+
+          if (isScrolled !== lastScrolled) {
+            lastScrolled = isScrolled;
+            setScrolled(isScrolled);
+          }
+          if (isPast !== lastPastHero) {
+            lastPastHero = isPast;
+            setPastHero(isPast);
+          }
           ticking = false;
         });
         ticking = true;

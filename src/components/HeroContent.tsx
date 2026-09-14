@@ -152,7 +152,7 @@ export default function HeroContent({ stage }: { stage: number }) {
                 className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border-[2px] border-[#02006F] flex items-center justify-center bg-gray-200 overflow-hidden shadow-sm transition-transform duration-200 ease-out hover:scale-110 hover:z-20 cursor-pointer"
                 style={{ zIndex: 5 - i }}
               >
-                 <img src={`https://i.pravatar.cc/100?img=${i+42}`} alt="Seller" className="w-full h-full object-cover" />
+                 <img src={`https://i.pravatar.cc/100?img=${i+42}`} alt="Seller" loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
