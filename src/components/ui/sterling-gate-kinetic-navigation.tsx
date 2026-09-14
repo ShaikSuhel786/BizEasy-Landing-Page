@@ -109,6 +109,7 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
   useEffect(() => {
     if (!mounted || !overlayRef.current) return;
 
+    const cleanups: (() => void)[] = [];
     const ctx = gsap.context(() => {
       const menuItems = overlayRef.current!.querySelectorAll(".menu-list-item[data-shape]");
       const shapesContainer = overlayRef.current!.querySelector(".ambient-background-shapes");
@@ -142,19 +143,16 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
         item.addEventListener("mouseenter", onEnter);
         item.addEventListener("mouseleave", onLeave);
         
-        (item as any)._cleanup = () => {
+        cleanups.push(() => {
           item.removeEventListener("mouseenter", onEnter);
           item.removeEventListener("mouseleave", onLeave);
-        };
+        });
       });
     }, overlayRef);
 
     return () => {
       ctx.revert();
-      if (overlayRef.current) {
-        const items = overlayRef.current.querySelectorAll(".menu-list-item[data-shape]");
-        items.forEach((item: any) => item._cleanup && item._cleanup());
-      }
+      cleanups.forEach((cleanup) => cleanup());
     };
   }, [mounted]);
 

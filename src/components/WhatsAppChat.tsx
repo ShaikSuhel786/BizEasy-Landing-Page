@@ -36,9 +36,9 @@ const msgIn: Variants = {
 };
 
 const sceneVariants: Variants = {
-  enter: { opacity: 0, filter: "blur(2px)" },
-  center: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.32, ease: EASE_EXPO } },
-  exit: { opacity: 0, filter: "blur(2px)", transition: { duration: 0.18, ease: EASE_OUT_SUBTLE } },
+  enter: { opacity: 0, y: 6 },
+  center: { opacity: 1, y: 0, transition: { duration: 0.28, ease: EASE_EXPO } },
+  exit: { opacity: 0, y: -4, transition: { duration: 0.18, ease: EASE_OUT_SUBTLE } },
 };
 
 // ─── Double tick (blue) ──────────────────────────────────────────────────────

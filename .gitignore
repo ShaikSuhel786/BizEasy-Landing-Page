@@ -10,7 +10,8 @@ out
 agent/
 docs/
 .impeccable/
-mockify/
+/mockify/
+!public/mockify/
 dist/
 frames/
 animation_ref.mp4

@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const EXPO_OUT = { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
 

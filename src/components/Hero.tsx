@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
@@ -13,8 +13,6 @@ import { PhoneMockup } from "./PhoneMockup";
 import WhatsAppChat from "./WhatsAppChat";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const EXPO_OUT = { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
 
 export default function Hero({ setStage, stage }: { setStage: (v: number) => void, stage: number }) {
   const stageRef = useRef<HTMLDivElement>(null);
