@@ -62,9 +62,28 @@ function Ts({ time, isOut }: { time: string; isOut?: boolean }) {
 }
 
 // ─── Incoming bubble ─────────────────────────────────────────────────────────
-function InMsg({ children, time, delay = 0, showTail = true }: { children: React.ReactNode; time: string; delay?: number; showTail?: boolean }) {
+function InMsg({ 
+  children, 
+  time, 
+  delay = 0, 
+  showTail = true,
+  layoutId
+}: { 
+  children: React.ReactNode; 
+  time: string; 
+  delay?: number; 
+  showTail?: boolean;
+  layoutId?: string;
+}) {
   return (
-    <motion.div variants={msgIn} initial="hidden" animate="show" transition={{ delay }} className="flex items-end gap-1 self-start max-w-[88%]">
+    <motion.div 
+      layoutId={layoutId}
+      variants={layoutId ? undefined : msgIn} 
+      initial={layoutId ? undefined : "hidden"} 
+      animate={layoutId ? undefined : "show"} 
+      transition={layoutId ? { type: "spring", stiffness: 120, damping: 18, mass: 0.8 } : { delay }} 
+      className="flex items-end gap-1 self-start max-w-[88%]"
+    >
       <div className="relative">
         {showTail && (
           <svg className="absolute -left-[6px] top-0" width="7" height="11" viewBox="0 0 8 13" fill="none">
@@ -247,12 +266,12 @@ function OrderStatusCard({ step, time, delay = 0 }: { step: 0 | 1 | 2 | 3; time:
 }
 
 // ─── Scene 1: New Order → UPI Payment Flow ───────────────────────────────────
-function Scene1({ reduced }: { reduced: boolean }) {
+function Scene1({ reduced, isFirstMount }: { reduced: boolean; isFirstMount?: boolean }) {
   const d = reduced ? 0 : 1;
   return (
     <div className="flex flex-col gap-1.5 px-2 py-1">
       <DateDivider label="Today" />
-      <InMsg time="10:38 AM" delay={0 * d} showTail>
+      <InMsg time="10:38 AM" delay={0 * d} showTail layoutId={isFirstMount ? "hero-chat-message-bubble" : undefined}>
         <span>Hi! I want to order the <span className="font-semibold">Blue Kurti (M size)</span> 🛍️</span>
       </InMsg>
       <InMsg time="10:38 AM" delay={0.35 * d} showTail={false}>
@@ -514,7 +533,7 @@ export default function WhatsAppChat() {
         <AnimatePresence mode="wait">
           <motion.div
             key={`hdr-${sceneIdx}`}
-            initial={{ opacity: 0 }}
+            initial={sceneIdx === 0 ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
@@ -536,13 +555,13 @@ export default function WhatsAppChat() {
           <motion.div
             key={`scene-${key}`}
             variants={sceneVariants}
-            initial="enter"
+            initial={sceneIdx === 0 && key === 0 ? false : "enter"}
             animate="center"
             exit="exit"
             className="absolute inset-0 overflow-y-auto"
             style={{ scrollbarWidth: "none", paddingBottom: 6 }}
           >
-            <SceneComponent reduced={!!shouldReduce} />
+            <SceneComponent reduced={!!shouldReduce} isFirstMount={sceneIdx === 0 && key === 0} />
           </motion.div>
         </AnimatePresence>
 
