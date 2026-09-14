@@ -162,8 +162,8 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           <HeroContent stage={stage} />
 
           {/* STAGE 2: Phone & Notification */}
-          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible mt-6 sm:mt-8 lg:mt-10 mb-[-100px] sm:mb-[-150px] lg:mb-[-180px]">
-            <div ref={phoneWrapperRef} className="relative shrink-0 w-[1100px] aspect-[1280/853]">
+          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible mt-4 sm:mt-5 lg:-mt-6 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px]">
+            <div ref={phoneWrapperRef} className="relative shrink-0 w-[760px] sm:w-[860px] lg:w-[960px] aspect-[1280/853]">
               {/* Hand Holding Phone Asset */}
               <AnimatePresence>
                 {stage >= 2 && (
@@ -176,16 +176,16 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                       transition={{ duration: 0.5, ease: "easeOut" }}
                       className="absolute inset-0 pointer-events-none z-10"
                     >
-                      <Image 
-                        src="/assets/phone-1.png"
-                        alt="Hand holding phone"
-                        fill
-                        className="object-cover object-top filter brightness-110 contrast-125 saturate-110 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-10 pointer-events-none"
-                        priority
-                      />
                       <PhoneMockup hideUI={false}>
                         <WhatsAppChat />
                       </PhoneMockup>
+                      <Image 
+                        src="/assets/phone-frame-v2.png"
+                        alt="Hand holding phone"
+                        fill
+                        className="object-cover object-top filter brightness-110 contrast-125 saturate-110 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
+                        priority
+                      />
                     </motion.div>
 
                     {/* Notification — morphs from Stage 1 banner, stays for 3.5s, then fades out */}
@@ -202,7 +202,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                               layoutId="notification-bubble"
                               transition={{ type: "spring", bounce: 0.25, duration: 0.8 }}
                               style={{ willChange: 'transform' }}
-                              className="w-full pt-[28px] px-1.5"
+                              className="w-full pt-[12.5cqw] px-1.5"
                             >
                               {/* iOS notification banner — WA green icon + order summary */}
                               <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.22)] border border-black/5 overflow-hidden">

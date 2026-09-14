@@ -378,38 +378,7 @@ const SCENES = [
   },
 ];
 
-// ─── Native iOS Status Bar Row ───────────────────────────────────────────────
-function WAStatusBar() {
-  return (
-    <div className="flex items-center justify-between px-3.5 pt-1.5 pb-0.5 h-[24px] select-none shrink-0">
-      {/* Time */}
-      <span className="text-white text-[9.5px] font-bold tracking-tight" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.4)" }}>
-        9:41
-      </span>
-      {/* Center Spacer where physical Dynamic Island sits in phone-1.png */}
-      <div className="w-[32%]" />
-      {/* Cellular + WiFi + Battery */}
-      <div className="flex items-center gap-1.5 shrink-0" style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }}>
-        <svg width="10" height="7" viewBox="0 0 11 8" fill="white">
-          <rect x="0" y="5" width="2" height="3" rx="0.4"/>
-          <rect x="3" y="3.5" width="2" height="4.5" rx="0.4"/>
-          <rect x="6" y="1.5" width="2" height="6.5" rx="0.4"/>
-          <rect x="9" y="0" width="2" height="8" rx="0.4"/>
-        </svg>
-        <svg width="9" height="7" viewBox="0 0 16 12" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
-          <path d="M1 5C4.5 1 11.5 1 15 5"/>
-          <path d="M3.5 7.5C5.5 5.5 10.5 5.5 12.5 7.5"/>
-          <circle cx="8" cy="11" r="1.2" fill="white" stroke="none"/>
-        </svg>
-        <svg width="14" height="7" viewBox="0 0 22 11" fill="none">
-          <rect x="0.5" y="0.5" width="18" height="10" rx="2" stroke="white" strokeWidth="1"/>
-          <rect x="2" y="2" width="13" height="7" rx="1" fill="white"/>
-          <path d="M20 3.5V7.5C20.8 7.2 21.5 6.4 21.5 5.5C21.5 4.6 20.8 3.8 20 3.5Z" fill="white"/>
-        </svg>
-      </div>
-    </div>
-  );
-}
+
 
 // ─── WhatsApp Navigation Header Row ──────────────────────────────────────────
 function WAHeader({ contact, sub }: { contact: string; sub: string }) {
@@ -510,9 +479,14 @@ export default function WhatsAppChat() {
       className="flex flex-col w-full h-full relative select-none"
       style={{ background: WA.chatBg, contain: "layout style" }}
     >
-      {/* ── Top Bar: Status Bar + WhatsApp Header in Solid Dark Green ── */}
-      <div className="shrink-0 flex flex-col shadow-xs z-10" style={{ background: WA.headerBg }}>
-        <WAStatusBar />
+      {/* ── Top Bar: WhatsApp Header in Solid Dark Green ── */}
+      <div 
+        className="shrink-0 flex flex-col shadow-xs z-10" 
+        style={{ 
+          background: WA.headerBg,
+          paddingTop: '12.5cqw'
+        }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={`hdr-${sceneIdx}`}
