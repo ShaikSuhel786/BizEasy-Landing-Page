@@ -49,7 +49,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           trigger: stageRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 0.8,
         },
         scale: 0.94,
         borderBottomLeftRadius: "64px",
@@ -57,13 +57,13 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
         ease: "none"
       });
 
-      // 2. Parallax Phone/Hand
+      // 2. Parallax Phone/Hand with momentum scrub
       gsap.to(phoneWrapperRef.current, {
         scrollTrigger: {
           trigger: stageRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 0.8,
         },
         y: -150,
         ease: "none"
@@ -85,10 +85,10 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           <AnimatePresence>
             {stage === 0 && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                initial={{ opacity: 0, scale: 0.95, filter: "blur(6px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-                transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
+                exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+                transition={{ type: "spring", bounce: 0.15, duration: 0.7 }}
                 className="absolute top-[45vh] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none"
               >
                 <div className="relative flex items-center justify-center">
@@ -122,16 +122,16 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                       filter="url(#glow)"
                       initial={{ strokeDasharray: "0 400" }}
                       animate={{ strokeDasharray: ["0 400", "200 400"], rotate: 360 }}
-                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
                       className="origin-center"
                     />
                   </svg>
 
-                  {/* Brand Logo Breathing - Pure CSS for 100% Instant Availability */}
+                  {/* Brand Logo Breathing */}
                   <motion.div 
-                    animate={{ scale: [0.97, 1.03, 0.97] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                    className="w-[84px] h-[84px] relative drop-shadow-[0_10px_20px_rgba(65,85,229,0.4)] z-10  rounded-[22px] flex items-center justify-center overflow-hidden"
+                    animate={{ scale: [0.98, 1.02, 0.98] }}
+                    transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                    className="w-[84px] h-[84px] relative drop-shadow-[0_10px_20px_rgba(65,85,229,0.4)] z-10 rounded-[22px] flex items-center justify-center overflow-hidden"
                   >
                     {/* The "B" Letter */}
                     <Image src="/assets/logo.png" alt="BizEasy Logo" width={250} height={250} className="w-13 h-13 sm:w-14 sm:h-14 drop-shadow-sm" />
@@ -147,11 +147,11 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
               <motion.div
                 key="stage1-bubble"
                 layoutId="notification-bubble"
-                initial={{ opacity: 0, scale: 0.95, y: 50 }}
-                animate={{ opacity: 1, scale: 1.3, y: 0 }}
-                transition={{ type: "spring", bounce: 0.3, duration: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95, y: 30 }}
+                animate={{ opacity: 1, scale: 1.15, y: 0 }}
+                transition={{ type: "spring", bounce: 0.18, duration: 0.75 }}
                 style={{ willChange: "transform" }}
-                className="absolute top-[50vh] left-1/2 -translate-x-1/2 bg-white p-4 pr-6 rounded-2xl shadow-[0_40px_80px_rgba(0,0,0,0.15)] flex gap-4 items-center w-[250px] h-fit z-50 pointer-events-none"
+                className="absolute top-[50vh] left-1/2 -translate-x-1/2 bg-white p-4 pr-6 rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.12)] flex gap-4 items-center w-[250px] h-fit z-50 pointer-events-none"
               >
                 <HeroNotification />
               </motion.div>
@@ -162,7 +162,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           <HeroContent stage={stage} />
 
           {/* STAGE 2: Phone & Notification */}
-          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible mt-4 sm:mt-5 lg:-mt-6 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px]">
+          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible -mt-8 sm:-mt-10 lg:-mt-14 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px]">
             <div ref={phoneWrapperRef} className="relative shrink-0 w-[760px] sm:w-[860px] lg:w-[960px] aspect-[1280/853]">
               {/* Hand Holding Phone Asset */}
               <AnimatePresence>
@@ -173,7 +173,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                       key="phone-bg"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                       className="absolute inset-0 pointer-events-none z-10"
                     >
                       <PhoneMockup hideUI={false}>
@@ -194,13 +194,13 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                         <motion.div
                           key="phone-notif"
                           initial={{ opacity: 1 }}
-                          exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+                          exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.35, ease: [0.32, 0.72, 0, 1] } }}
                           className="absolute inset-0 pointer-events-none z-20"
                         >
                           <PhoneMockup hideUI={true}>
                             <motion.div
                               layoutId="notification-bubble"
-                              transition={{ type: "spring", bounce: 0.25, duration: 0.8 }}
+                              transition={{ type: "spring", bounce: 0.18, duration: 0.75 }}
                               style={{ willChange: 'transform' }}
                               className="w-full pt-[12.5cqw] px-1.5"
                             >

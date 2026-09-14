@@ -25,18 +25,20 @@ const WA = {
   listButtonBorder: "#E9EDEF",
 };
 
-// ─── Framer Variants (GPU-safe: only transform + opacity) ────────────────────
+// ─── Framer Variants (GPU-safe: only transform + opacity + subtle blur bridge) ──
 const EASE_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number];
+const EASE_OUT_SUBTLE = [0.32, 0.72, 0, 1] as [number, number, number, number];
+
 const msgIn: Variants = {
-  hidden: { opacity: 0, y: 8, scale: 0.98 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.25, ease: EASE_EXPO } },
-  exit: { opacity: 0, y: -6, transition: { duration: 0.15, ease: "easeIn" as const } },
+  hidden: { opacity: 0, y: 8, scale: 0.96 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.28, ease: EASE_EXPO } },
+  exit: { opacity: 0, y: -4, transition: { duration: 0.18, ease: EASE_OUT_SUBTLE } },
 };
 
 const sceneVariants: Variants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1, transition: { duration: 0.3, ease: "easeOut" as const } },
-  exit: { opacity: 0, transition: { duration: 0.2, ease: "easeIn" as const } },
+  enter: { opacity: 0, filter: "blur(2px)" },
+  center: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.32, ease: EASE_EXPO } },
+  exit: { opacity: 0, filter: "blur(2px)", transition: { duration: 0.18, ease: EASE_OUT_SUBTLE } },
 };
 
 // ─── Double tick (blue) ──────────────────────────────────────────────────────
@@ -144,13 +146,18 @@ function ProductCard({ name, price, desc, time, delay = 0 }: { name: string; pri
             <p style={{ fontSize: 9.5, color: WA.timestamp, lineHeight: "12px", marginTop: 1 }}>{desc}</p>
             <div className="flex justify-end mt-1"><Ts time={time} /></div>
           </div>
-          {/* Add to cart button */}
-          <div className="border-t flex items-center justify-center py-1 gap-1 bg-slate-50/50" style={{ borderColor: "#E9EDEF" }}>
+          {/* Add to cart button with Emil's tactile active feedback */}
+          <motion.div 
+            whileHover={{ backgroundColor: "rgba(0, 168, 132, 0.08)" }}
+            whileTap={{ scale: 0.96 }}
+            className="border-t flex items-center justify-center py-1 gap-1 bg-slate-50/50 cursor-pointer select-none transition-colors duration-150" 
+            style={{ borderColor: "#E9EDEF" }}
+          >
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={WA.onlineGreen} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
             <span style={{ color: WA.onlineGreen, fontSize: 10, fontWeight: 600 }}>Add to cart</span>
-          </div>
+          </motion.div>
         </div>
       </div>
     </motion.div>
@@ -177,12 +184,16 @@ function UPICard({ amount, upiId, orderId, time, delay = 0 }: { amount: string; 
               </div>
               <span className="text-[8px] bg-white/20 text-white font-bold px-1 py-0.5 rounded font-mono">UPI</span>
             </div>
-            <div className="px-2 py-1 bg-[#F8F9FA] flex items-center justify-center gap-1">
+            <motion.div 
+              whileHover={{ backgroundColor: "#F0F2F5" }}
+              whileTap={{ scale: 0.97 }}
+              className="px-2 py-1 bg-[#F8F9FA] flex items-center justify-center gap-1 cursor-pointer select-none transition-colors duration-150"
+            >
               <svg width="9" height="9" viewBox="0 0 24 24" fill={WA.onlineGreen}>
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
               <span style={{ color: WA.onlineGreen, fontSize: 9.5, fontWeight: 600 }}>Pay via GPay / PhonePe</span>
-            </div>
+            </motion.div>
           </div>
           <div className="px-2 pb-1 flex justify-end"><Ts time={time} /></div>
         </div>
@@ -209,7 +220,7 @@ function OrderStatusCard({ step, time, delay = 0 }: { step: 0 | 1 | 2 | 3; time:
             {steps.map((s, i) => (
               <div key={s} className="flex items-center gap-1.5 mb-1">
                 <div className="flex flex-col items-center" style={{ width: 14 }}>
-                  <div className="w-[14px] h-[14px] rounded-full flex items-center justify-center shrink-0" style={{ background: i <= step ? WA.onlineGreen : "#E9EDEF" }}>
+                  <div className="w-[14px] h-[14px] rounded-full flex items-center justify-center shrink-0 transition-colors duration-200" style={{ background: i <= step ? WA.onlineGreen : "#E9EDEF" }}>
                     {i <= step ? (
                       <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
                         <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -219,7 +230,7 @@ function OrderStatusCard({ step, time, delay = 0 }: { step: 0 | 1 | 2 | 3; time:
                     )}
                   </div>
                   {i < steps.length - 1 && (
-                    <div className="w-[1.5px] h-2.5" style={{ background: i < step ? WA.onlineGreen : "#E9EDEF" }} />
+                    <div className="w-[1.5px] h-2.5 transition-colors duration-200" style={{ background: i < step ? WA.onlineGreen : "#E9EDEF" }} />
                   )}
                 </div>
                 <span style={{ fontSize: 9.5, color: i <= step ? WA.incomingText : "#94A3B8", fontWeight: i === step ? 600 : 400 }}>
@@ -278,14 +289,22 @@ function Scene2({ reduced }: { reduced: boolean }) {
           <span style={{ color: "#64748B", fontSize: 9.5 }}>What would you like to browse?</span>
         </span>
       </InMsg>
-      {/* Quick-reply compact buttons */}
+      {/* Quick-reply compact buttons with tactile click */}
       <motion.div variants={msgIn} initial="hidden" animate="show" transition={{ delay: 0.6 * d }} className="flex flex-wrap gap-1 justify-center my-0.5">
-        <span className="bg-white border border-[#E9EDEF] text-[#00A884] font-semibold text-[9.5px] px-2.5 py-1 rounded-full shadow-xs cursor-pointer">
+        <motion.span 
+          whileHover={{ scale: 1.03 }} 
+          whileTap={{ scale: 0.96 }}
+          className="bg-white border border-[#E9EDEF] text-[#00A884] font-semibold text-[9.5px] px-2.5 py-1 rounded-full shadow-xs cursor-pointer select-none"
+        >
           👗 దుస్తులు · Dresses
-        </span>
-        <span className="bg-white border border-[#E9EDEF] text-[#00A884] font-semibold text-[9.5px] px-2.5 py-1 rounded-full shadow-xs cursor-pointer">
+        </motion.span>
+        <motion.span 
+          whileHover={{ scale: 1.03 }} 
+          whileTap={{ scale: 0.96 }}
+          className="bg-white border border-[#E9EDEF] text-[#00A884] font-semibold text-[9.5px] px-2.5 py-1 rounded-full shadow-xs cursor-pointer select-none"
+        >
           👟 చెప్పులు · Footwear
-        </span>
+        </motion.span>
       </motion.div>
       <OutMsg time="2:15 PM" delay={1.2 * d} showTail>👗 దుస్తులు · Dresses</OutMsg>
       <ProductCard
@@ -329,7 +348,12 @@ function Scene3({ reduced }: { reduced: boolean }) {
           <svg className="absolute -left-[6px] top-0" width="7" height="11" viewBox="0 0 8 13" fill="none">
             <path d="M7 0C7 0 0 4 0 13L8 13L8 0L7 0Z" fill={WA.incomingBg} />
           </svg>
-          <div className="rounded-lg rounded-tl-xs overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.12)] border border-black/5" style={{ background: WA.incomingBg }}>
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            className="rounded-lg rounded-tl-xs overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.12)] border border-black/5 cursor-pointer select-none" 
+            style={{ background: WA.incomingBg }}
+          >
             <div className="flex items-center gap-1.5 px-2 py-1.5 border-l-3" style={{ borderColor: "#00A884" }}>
               <div className="w-7 h-7 rounded flex items-center justify-center shrink-0 bg-amber-50">
                 <span style={{ fontSize: 14 }}>🧾</span>
@@ -340,7 +364,7 @@ function Scene3({ reduced }: { reduced: boolean }) {
               </div>
             </div>
             <div className="px-2 pb-1 flex justify-end"><Ts time="3:01 PM" /></div>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
       <InMsg time="3:02 PM" delay={3.3 * d} showTail>

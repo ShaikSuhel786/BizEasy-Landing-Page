@@ -168,10 +168,11 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
               <div className="nav-row__right flex items-center gap-4">
                
                 
-                {/* Premium Toggle Button */}
+                {/* Premium Toggle Button with tactile feedback */}
                 <button 
                   role="button" 
-                  className="nav-close-btn flex items-center justify-center w-12 h-12 rounded-full bg-black text-white hover:bg-gray-800 transition-all pointer-events-auto" 
+                  aria-label="Toggle navigation menu"
+                  className="nav-close-btn flex items-center justify-center w-12 h-12 rounded-full bg-black text-white hover:bg-gray-800 active:scale-95 transition-[transform,background-color] duration-150 ease-out pointer-events-auto cursor-pointer select-none" 
                   onClick={toggleMenu}
                 >
                   <MorphIcon icon={isMenuOpen ? X : Menu} />

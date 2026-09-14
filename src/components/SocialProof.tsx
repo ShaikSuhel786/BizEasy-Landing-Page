@@ -31,13 +31,13 @@ export default function SocialProof() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10" />
 
-        <div className="flex animate-marquee whitespace-nowrap min-w-full hover:[animation-play-state:paused]">
+        <div className="flex animate-marquee whitespace-nowrap min-w-full hover:[animation-play-state:paused] will-change-transform">
           {duplicatedLogos.map((logo, index) => {
             const Icon = logo.icon;
             return (
               <div
                 key={index}
-                className="flex items-center justify-center gap-2 mx-12 md:mx-16 text-gray-300 hover:text-gray-600 transition-colors duration-300 cursor-default"
+                className="flex items-center justify-center gap-2 mx-12 md:mx-16 text-gray-300 hover:text-gray-600 transition-[color,transform] duration-200 ease-out hover:scale-105 cursor-default select-none"
               >
                 <Icon className="w-8 h-8" strokeWidth={1.5} />
                 <span className="text-xl font-bold tracking-tight">{logo.name}</span>

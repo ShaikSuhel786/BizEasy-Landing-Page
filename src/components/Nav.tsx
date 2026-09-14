@@ -43,14 +43,14 @@ export default function Nav({ stage }: { stage: number }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // GSAP Animations for CTA Reveal
+  // GSAP Animations for CTA Reveal with Asymmetric Easing
   useEffect(() => {
     if (desktopCtaRef.current) {
       gsap.to(desktopCtaRef.current, { 
         width: pastHero ? "auto" : 0, 
         opacity: pastHero ? 1 : 0, 
-        duration: pastHero ? 0.55 : 0.4, 
-        ease: "power2.inOut",
+        duration: pastHero ? 0.45 : 0.3, 
+        ease: pastHero ? "power3.out" : "power2.in",
         overwrite: "auto"
       });
     }
@@ -60,8 +60,8 @@ export default function Nav({ stage }: { stage: number }) {
       gsap.to(mobileCtaRef.current, { 
         width: showMobile ? "auto" : 0, 
         opacity: showMobile ? 1 : 0, 
-        duration: showMobile ? 0.55 : 0.4, 
-        ease: "power2.inOut",
+        duration: showMobile ? 0.45 : 0.3, 
+        ease: showMobile ? "power3.out" : "power2.in",
         overwrite: "auto"
       });
     }
@@ -72,13 +72,13 @@ export default function Nav({ stage }: { stage: number }) {
       {stage >= 2 && (
         <motion.header 
           key="navbar"
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ ...EXPO_OUT, delay: 0.1 }}
           className="fixed top-5 left-0 right-0 z-[120] flex justify-center pointer-events-none px-4"
         >
           <div 
-            className={`pointer-events-auto flex items-center justify-between w-full max-w-[95vw] md:w-fit md:max-w-none mx-auto gap-3 sm:gap-6 lg:gap-10 px-2 py-2 rounded-full transition-colors duration-500 ease-out h-[60px] ${
+            className={`pointer-events-auto flex items-center justify-between w-full max-w-[95vw] md:w-fit md:max-w-none mx-auto gap-3 sm:gap-6 lg:gap-10 px-2 py-2 rounded-full transition-[background-color,box-shadow,ring-color] duration-300 ease-out h-[60px] ${
               isMenuOpen 
                 ? "bg-transparent"
                 : scrolled 
@@ -88,8 +88,9 @@ export default function Nav({ stage }: { stage: number }) {
           >
             <div className="flex items-center gap-2 sm:gap-3 sm:pl-3 h-full">
               <motion.div 
-                whileHover={{ scale: 1.05, rotate: -5 }} 
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.04, rotate: -3 }} 
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="flex items-center justify-center cursor-pointer"
               >
                 <Image src="/assets/logo.png" alt="BizEasy Logo" width={150} height={150} className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-sm" />
@@ -104,7 +105,7 @@ export default function Nav({ stage }: { stage: number }) {
                   href={link.href}
                   onMouseEnter={() => setHoveredLink(link.href)}
                   onMouseLeave={() => setHoveredLink(null)}
-                  className="relative px-4 h-[40px] flex items-center justify-center rounded-full transition-colors hover:text-slate-950 outline-none focus-visible:ring-2 focus-visible:ring-black/20"
+                  className="relative px-4 h-[40px] flex items-center justify-center rounded-full transition-colors duration-150 hover:text-slate-950 outline-none focus-visible:ring-2 focus-visible:ring-black/20"
                 >
                   <span className="relative z-10">{link.label}</span>
                   {hoveredLink === link.href && (
@@ -114,7 +115,7 @@ export default function Nav({ stage }: { stage: number }) {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
                     />
                   )}
                 </a>
@@ -124,9 +125,10 @@ export default function Nav({ stage }: { stage: number }) {
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center gap-3 pr-1 h-full">
               <motion.div 
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(0,0,0,0.08)" }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-1.5 text-slate-600 hover:text-slate-950 cursor-pointer text-[13px] font-semibold transition-colors bg-black/5 px-3 h-[40px] rounded-full"
+                whileHover={{ scale: 1.03, backgroundColor: "rgba(0,0,0,0.08)" }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="flex items-center gap-1.5 text-slate-600 hover:text-slate-950 cursor-pointer text-[13px] font-semibold transition-colors duration-150 bg-black/5 px-3 h-[40px] rounded-full"
                 aria-label="Change language"
                 role="button"
                 tabIndex={0}
@@ -142,9 +144,10 @@ export default function Nav({ stage }: { stage: number }) {
               >
                 <div className="pl-1 h-full flex items-center shrink-0 min-w-max">
                   <motion.button 
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    className="bg-slate-950 text-white px-5 h-[40px] flex items-center justify-center rounded-full text-[14px] font-semibold tracking-wide shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:bg-black hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-all whitespace-nowrap"
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="bg-slate-950 text-white px-5 h-[40px] flex items-center justify-center rounded-full text-[14px] font-semibold tracking-wide shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:bg-black hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-[background-color,box-shadow] duration-160 whitespace-nowrap"
                   >
                     Start free on WhatsApp
                   </motion.button>
@@ -161,9 +164,10 @@ export default function Nav({ stage }: { stage: number }) {
               >
                 <div className="h-full flex items-center shrink-0 min-w-max pl-1">
                   <motion.button 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-slate-950 text-white px-4 h-[36px] flex items-center justify-center rounded-full text-[13px] font-bold tracking-wide shadow-md hover:bg-black transition-all whitespace-nowrap"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="bg-slate-950 text-white px-4 h-[36px] flex items-center justify-center rounded-full text-[13px] font-bold tracking-wide shadow-md hover:bg-black transition-[background-color,box-shadow] duration-160 whitespace-nowrap"
                   >
                     Start free
                   </motion.button>

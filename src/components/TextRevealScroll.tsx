@@ -18,7 +18,7 @@ export default function TextRevealScroll({ text }: { text: string }) {
     const words = textRef.current.querySelectorAll('.word');
     
     gsap.fromTo(words, 
-      { color: "#e5e7eb" }, // Very light grey (matches the video's hidden state)
+      { color: "#e5e7eb" }, // Very light grey (matches the hidden state)
       {
         color: "#0f172a", // Solid slate-950 (BizEasy brand dark text)
         stagger: 0.5,
@@ -27,14 +27,14 @@ export default function TextRevealScroll({ text }: { text: string }) {
           trigger: containerRef.current,
           start: "top 75%",
           end: "bottom 75%",
-          scrub: 1,
+          scrub: 0.8,
         }
       }
     );
   }, { scope: containerRef });
 
   const splitWords = text.split(" ").map((word, i) => (
-    <span key={i} className="word inline-block mr-[0.25em] font-fraunces font-black transition-colors duration-75 will-change-[color]">
+    <span key={i} className="word inline-block mr-[0.25em] font-fraunces font-black will-change-[color]">
       {word}
     </span>
   ));
