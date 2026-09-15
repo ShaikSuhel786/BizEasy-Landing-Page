@@ -12,8 +12,26 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "BizEasy",
-  description: "Never lose a WhatsApp order again",
+  // Checklist K1: Descriptive title + meta description
+  title: "BizEasy — Never Lose a WhatsApp Order Again",
+  description:
+    "BizEasy automates WhatsApp & Instagram orders for Indian sellers. Instant UPI payments, GST invoicing, and a smart catalogue — all inside the chat your customers already use.",
+  // Checklist K2: Link-preview card for WhatsApp, Instagram, Twitter shares
+  openGraph: {
+    title: "BizEasy — Never Lose a WhatsApp Order Again",
+    description:
+      "Automate your WhatsApp shop. Catalogue, orders, UPI payments, and GST invoicing — in one tap.",
+    url: "https://bizeasy.in",
+    siteName: "BizEasy",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BizEasy — Never Lose a WhatsApp Order Again",
+    description:
+      "Automate your WhatsApp shop. Catalogue, orders, UPI payments, and GST invoicing — in one tap.",
+  },
 };
 
 export const viewport: Viewport = {
