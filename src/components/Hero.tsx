@@ -77,7 +77,8 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
                 transition={{ type: "spring", bounce: 0.15, duration: 0.7 }}
-                className="absolute top-[45vh] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none"
+                className="absolute top-[45vh] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none transform-gpu will-change-[filter,transform,opacity]"
+                style={{ transform: 'translateZ(0)' }}
               >
                 <div className="relative flex items-center justify-center">
                   {/* Glowing background blur */}

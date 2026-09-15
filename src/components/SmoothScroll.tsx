@@ -21,13 +21,11 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     // Initialize Lenis smooth scroll engine (autoRaf: false ensures single-source ticker with GSAP)
     const lenis = new Lenis({
       autoRaf: false,
-      duration: 0.95,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.1,
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.2,
       infinite: false,
     });
 
@@ -47,7 +45,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     };
 
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(33, 16);
 
     // Trigger an initial refresh of ScrollTrigger once Lenis is active
     ScrollTrigger.refresh();

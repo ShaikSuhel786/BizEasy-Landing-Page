@@ -28,9 +28,9 @@ export default function Features() {
     <section id="features" className="relative py-32 overflow-hidden bg-[#FAFAFA] scroll-mt-20">
       {/* High-Performance Ambient Radial Glows */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-blue-400/10 rounded-full blur-[80px]" />
-        <div className="absolute top-1/3 right-1/4 w-[350px] h-[350px] bg-purple-400/10 rounded-full blur-[80px]" />
-        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-[80px]" />
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-blue-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute top-1/3 right-1/4 w-[350px] h-[350px] bg-purple-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
