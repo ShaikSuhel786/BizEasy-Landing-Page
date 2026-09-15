@@ -18,14 +18,15 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    // Initialize Lenis smooth scroll engine (autoRaf: false ensures single-source ticker with GSAP)
+    // Initialize Lenis smooth scroll engine (Awwwards-grade configuration)
     const lenis = new Lenis({
       autoRaf: false,
-      lerp: 0.1,
+      lerp: 0.07, // Buttery smooth linear interpolation (replaces duration/easing for natural momentum)
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1.0,
+      wheelMultiplier: 1.0, // Standard scroll distance
+      touchMultiplier: 1.5, // slightly faster on trackpads
       infinite: false,
     });
 

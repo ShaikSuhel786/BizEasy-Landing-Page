@@ -40,8 +40,12 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           start: "top top",
           end: "bottom top",
           scrub: true,
+          invalidateOnRefresh: true,
         },
-        scale: 0.95,
+        scale: () => {
+          const gap = window.innerWidth < 640 ? 32 : 64; // 16px gap on mobile, 32px gap on desktop
+          return (window.innerWidth - gap) / window.innerWidth;
+        },
         ease: "none"
       });
 
@@ -151,7 +155,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           <HeroContent stage={stage} />
 
           {/* STAGE 2: Phone Mockup */}
-          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible -mt-8 sm:-mt-10 lg:-mt-14 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px]">
+          <div className="relative w-full flex justify-center items-start pointer-events-none overflow-visible -mt-8 sm:-mt-10 lg:-mt-14 mb-[-60px] sm:mb-[-100px] lg:mb-[-160px] z-20">
             <div ref={phoneWrapperRef} className="relative shrink-0 w-[760px] sm:w-[860px] lg:w-[960px] aspect-[1280/853] will-change-transform">
               {/* Hand Holding Phone Asset */}
               <AnimatePresence>
