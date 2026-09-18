@@ -77,9 +77,9 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           <AnimatePresence>
             {stage === 0 && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, filter: "blur(6px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ type: "spring", bounce: 0.15, duration: 0.7 }}
                 className="absolute top-[45vh] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-50 pointer-events-none transform-gpu will-change-[filter,transform,opacity]"
                 style={{ transform: 'translateZ(0)' }}
@@ -112,7 +112,6 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
                       stroke="url(#ring-gradient)"
                       strokeWidth="2.5"
                       strokeLinecap="round"
-                      filter="url(#glow)"
                       initial={{ strokeDasharray: "0 400" }}
                       animate={{ strokeDasharray: ["0 400", "200 400"], rotate: 360 }}
                       transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}

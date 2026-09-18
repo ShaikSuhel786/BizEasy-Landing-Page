@@ -185,7 +185,7 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
       {mounted && createPortal(
         <section ref={overlayRef} className="fullscreen-menu-container dark">
           <div data-lenis-prevent className="nav-overlay-wrapper fixed inset-0 z-[110] w-full h-full pointer-events-auto" style={{ display: 'none' }}>
-            <div className="overlay absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={closeMenu}></div>
+            <div className="overlay absolute inset-0 bg-background/95" onClick={closeMenu}></div>
             
             <nav className="menu-content absolute top-0 right-0 h-full w-full sm:w-[85vw] sm:max-w-md overflow-hidden shadow-2xl border-l border-border rounded-l-2xl sm:rounded-none">
               
@@ -193,7 +193,7 @@ export function Component({ onToggle }: { onToggle?: (isOpen: boolean) => void }
               <div className="menu-bg absolute inset-0">
                 <div className="backdrop-layer first absolute inset-0 bg-background"></div>
                 <div className="backdrop-layer second absolute inset-0 bg-card"></div>
-                <div className="backdrop-layer absolute inset-0 bg-background/80 backdrop-blur-3xl shadow-inner"></div>
+                <div className="backdrop-layer absolute inset-0 bg-background/98 shadow-inner"></div>
 
                 {/* Abstract shapes container using brand tokens */}
                 <div className="ambient-background-shapes absolute inset-0 opacity-40 pointer-events-none mix-blend-screen">

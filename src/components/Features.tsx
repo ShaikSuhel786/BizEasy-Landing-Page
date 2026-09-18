@@ -26,11 +26,11 @@ export default function Features() {
 
   return (
     <section id="features" className="relative py-32 overflow-hidden bg-[#FAFAFA] scroll-mt-20">
-      {/* High-Performance Ambient Radial Glows */}
+      {/* High-Performance Ambient Radial Glows (Using radial gradients instead of expensive CSS blur) */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-blue-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
-        <div className="absolute top-1/3 right-1/4 w-[350px] h-[350px] bg-purple-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
-        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-sky-400/10 rounded-full blur-[80px] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(96,165,250,0.15)_0%,transparent_70%)] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(192,132,252,0.15)_0%,transparent_70%)] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-[550px] h-[550px] bg-[radial-gradient(circle,rgba(56,189,248,0.15)_0%,transparent_70%)] transform-gpu will-change-transform" style={{ transform: 'translateZ(0)' }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
@@ -59,7 +59,7 @@ export default function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: idx * 0.1, ease: EXPO_OUT }}
-                className="relative group p-8 rounded-[32px] bg-white/90 backdrop-blur-md border border-black/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 active:scale-[0.98] transition-[transform,box-shadow] duration-200 ease-out cursor-default select-none will-change-transform"
+                className="relative group p-8 rounded-[32px] bg-white border border-black/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 active:scale-[0.98] transition-[transform,box-shadow] duration-200 ease-out cursor-default select-none will-change-transform"
               >
                 <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-6 text-gray-900 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-250 ease-out">
                   <Icon className="w-5 h-5" strokeWidth={2} />

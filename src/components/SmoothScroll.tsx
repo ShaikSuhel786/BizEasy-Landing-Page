@@ -46,7 +46,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     };
 
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(33, 16);
+    gsap.ticker.lagSmoothing(0);
 
     // Trigger an initial refresh of ScrollTrigger once Lenis is active
     ScrollTrigger.refresh();
