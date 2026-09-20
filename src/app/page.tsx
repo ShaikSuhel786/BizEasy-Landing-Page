@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
@@ -10,9 +10,6 @@ import Features from "@/components/Features";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 
-// Section order per docs/checklist.md:
-// A Hero, B Problem, (C HowItWorks TODO), D Features, (E Trust TODO)
-// F Pricing, G (Signup TODO), H FAQ, (Footer TODO)
 export default function LandingPage() {
   const [stage, setStage] = useState(0);
 
@@ -22,7 +19,7 @@ export default function LandingPage() {
       <Hero stage={stage} setStage={setStage} />
       <SocialProof />
       <Problem />
-      <TextRevealScroll text="Managing WhatsApp orders manually takes hours. Automating with BizEasy takes minutes. Instant UPI payments. Automated GST invoicing. No human intervention needed." />
+      {/* <TextRevealScroll text="Managing WhatsApp orders manually takes hours. Automating with BizEasy takes minutes. Instant UPI payments. Automated GST invoicing. No human intervention needed." /> */}
       <Features />
       <Pricing />
       <FAQ />

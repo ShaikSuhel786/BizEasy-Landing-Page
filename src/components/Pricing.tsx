@@ -1,10 +1,4 @@
 ﻿"use client";
-// ─── BizEasy Section: Pricing ─────────────────────────────────────────────────
-// Checklist items covered: F1 (visible tiers), F2 (feature comparison), F3 (no hidden fees),
-//                          F4 (no card required), F5 (upgrade trigger)
-// Design: 2-tier asymmetric. Free (left) + Pro recommended (right, Navy border)
-// Motion reason: Hierarchy (reveal on scroll)
-// Adapted from: 21st.dev/efferd/pricing-4 (ID 18957) — re-skinned to BizEasy tokens
 
 import { useRef, useState } from "react";
 import { motion, useInView, useReducedMotion, AnimatePresence } from "framer-motion";

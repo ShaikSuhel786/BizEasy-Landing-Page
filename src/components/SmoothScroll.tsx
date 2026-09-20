@@ -48,10 +48,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
-    // Trigger an initial refresh of ScrollTrigger once Lenis is active
     ScrollTrigger.refresh();
 
-    // Smooth anchor navigation for all in-page jump links (e.g. href="#features")
     const handleAnchorClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest("a");
       if (!target) return;
