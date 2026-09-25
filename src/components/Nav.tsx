@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#features", label: "Features" },
   { href: "#customers", label: "Customers" },
-  { href: "#pricing", label: "Pricing" }
+  // { href: "#pricing", label: "Pricing" }
 ];
 
 export default function Nav({ stage }: { stage: number }) {
@@ -26,7 +26,6 @@ export default function Nav({ stage }: { stage: number }) {
   const desktopCtaRef = useRef<HTMLDivElement>(null);
   const mobileCtaRef = useRef<HTMLDivElement>(null);
   
-  // Scroll Listener - Only re-render React state when threshold values actually change
   useEffect(() => {
     let ticking = false;
     let lastScrolled = false;

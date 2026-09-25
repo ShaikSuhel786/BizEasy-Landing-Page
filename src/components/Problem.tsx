@@ -1,389 +1,316 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import {
-  Sparkles,
-  ArrowRight,
-  Clock,
-  Receipt,
-  CheckCircle2,
-  Zap,
-  TrendingUp,
-} from "lucide-react";
+import React, { useRef } from "react";
+import Image from "next/image";
+import { Zap, Receipt, ArrowRight, ShieldCheck, AlertCircle } from "lucide-react";
+import { PhoneMockup } from "./PhoneMockup";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 
-// Utility for Tailwind classes
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+// Register ScrollTrigger
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
-
-// ─── DATA & STEPS ───
-
-const NARRATIVE_STEPS = [
-  {
-    id: 0,
-    icon: Clock,
-    iconColor: "text-rose-500",
-    iconBg: "bg-rose-50 border-rose-100",
-    title: "The Midnight Flood",
-    subtitle: "The clock strikes 11:46 PM.",
-    description:
-      "Human seller is offline. A customer queries an urgent order. The latency clock ticks up, risking a ₹1,890 lost sale to a competitor who replies faster.",
-  },
-  {
-    id: 1,
-    icon: Sparkles,
-    iconColor: "text-emerald-500",
-    iconBg: "bg-emerald-50 border-emerald-100",
-    title: "Meet Your Bot",
-    subtitle: "Enter your 24/7 AI Agent.",
-    description:
-      "The BizEasy Bot activates instantly. It checks stock, confirms availability, and sends an interactive product preview with a 1-tap UPI checkout button.",
-  },
-  {
-    id: 2,
-    icon: Zap,
-    iconColor: "text-blue-500",
-    iconBg: "bg-blue-50 border-blue-100",
-    title: "Auto Execution",
-    subtitle: "Payments on Autopilot.",
-    description:
-      "Customer pays. The bot automatically verifies the bank settlement in 1.4s (blocking fake slips), generates a GST PDF, and sends the dispatch link.",
-  },
-  {
-    id: 3,
-    icon: TrendingUp,
-    iconColor: "text-indigo-500",
-    iconBg: "bg-indigo-50 border-indigo-100",
-    title: "The Aftermath",
-    subtitle: "Wake up to Sales.",
-    description:
-      "While you slept, your AI agent captured the impulsive midnight buyers. Wake up to a dashboard of settled payments and ready-to-ship orders.",
-  },
-];
 
 export default function Problem() {
-  const [activeStep, setActiveStep] = useState(0);
-
-  return (
-    <section id="problem" className="relative bg-[#FAFAFA] text-slate-900 overflow-clip font-sans">
+  const containerRef = useRef<HTMLElement>(null);
+  
+  useGSAP(() => {
+    // Wait for a tick to ensure DOM is fully rendered for SplitType
+    const timer = setTimeout(() => {
+      // Split Texts
+      const splits = document.querySelectorAll('.split-text');
+      splits.forEach(el => {
+        new SplitType(el as HTMLElement, { types: 'lines, words' });
+      });
       
-      {/* ─── AURA BACKGROUND (Performant CSS Gradients) ─── */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-100/40 blur-[120px] opacity-70 mix-blend-multiply" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-emerald-100/40 blur-[120px] opacity-70 mix-blend-multiply" />
-        <div className="absolute top-[40%] left-[60%] w-[40vw] h-[40vw] rounded-full bg-rose-100/30 blur-[120px] opacity-70 mix-blend-multiply" />
-        {/* Grid pattern removed per user request */}
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      // Setup initial states
+      gsap.set('.text-block-2, .text-block-3', { autoAlpha: 0, display: 'none' });
+      gsap.set('.text-block-1 .word', { yPercent: 0 }); 
+      gsap.set('.text-block-2 .word, .text-block-3 .word', { yPercent: 100 });
+      gsap.set('.line', { overflow: 'hidden' }); // Critical for masking reveal
+      
+      // Chat items
+      gsap.set('.msg-2, .lost-sale, .activation, .msg-3, .msg-4, .msg-5, .msg-6', { opacity: 0, y: 15 });
+      gsap.set('.lost-sale, .activation', { scale: 0.8, y: 0 });
+      gsap.set('.header-online', { opacity: 0 });
+      gsap.set('.header-offline', { opacity: 1 });
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=400%", // 400vh scroll duration
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1
+        }
+      });
+      
+      // PHASE 1: Chaos -> Transition to Dark
+      tl.to('.bg-container', { backgroundColor: '#020617', duration: 1 }, 0)
+        .to('.msg-2', { opacity: 1, y: 0, duration: 0.2 }, 0.1)
+        .to('.lost-sale', { opacity: 1, scale: 1, duration: 0.2 }, 0.2)
+        // Transition Text 1 -> Text 2
+        .to('.text-block-1 .word', { yPercent: -100, stagger: 0.015, duration: 0.4, ease: 'power2.in' }, 0.2)
+        .set('.text-block-1', { display: 'none' }, 0.6)
+        .set('.text-block-2', { display: 'flex', autoAlpha: 1 }, 0.6)
+        .to('.text-block-2 .word', { yPercent: 0, stagger: 0.015, duration: 0.5, ease: 'power3.out' }, 0.6);
         
-        {/* Mobile Header (Only visible on small screens, establishes context) */}
-        <div className="lg:hidden pt-24 pb-8 text-center">
-          <h2 className="text-4xl font-bold tracking-tight mb-4 font-outfit text-slate-900">
-            Never lose a sale to <span className="text-rose-500">sleep.</span>
-          </h2>
-          <p className="text-slate-500 max-w-md mx-auto">
-            Scroll to see how BizEasy handles your midnight traffic effortlessly.
-          </p>
-        </div>
+      // PHASE 2: AI Takes Over -> Transition to Emerald
+      tl.to('.bg-container', { backgroundColor: '#022c22', duration: 1 }, 1)
+        .to('.header-offline', { opacity: 0, duration: 0.1 }, 1.1)
+        .to('.header-online', { opacity: 1, duration: 0.1 }, 1.1)
+        .to('.activation', { opacity: 1, scale: 1, duration: 0.2 }, 1.1)
+        .to('.chat-scroll', { y: -180, duration: 0.4, ease: 'power2.inOut' }, 1.2)
+        .to('.msg-3', { opacity: 1, y: 0, duration: 0.2 }, 1.4)
+        .to('.msg-4', { opacity: 1, y: 0, duration: 0.2 }, 1.6)
+        // Transition Text 2 -> Text 3
+        .to('.text-block-2 .word', { yPercent: -100, stagger: 0.015, duration: 0.4, ease: 'power2.in' }, 1.6)
+        .set('.text-block-2', { display: 'none' }, 2.0)
+        .set('.text-block-3', { display: 'flex', autoAlpha: 1 }, 2.0)
+        .to('.text-block-3 .word', { yPercent: 0, stagger: 0.015, duration: 0.5, ease: 'power3.out' }, 2.0);
+        
+      // PHASE 3: Success -> Transition to Dark Blue
+      tl.to('.bg-container', { backgroundColor: '#020617', duration: 1 }, 2)
+        .to('.chat-scroll', { y: -380, duration: 0.4, ease: 'power2.inOut' }, 2.2)
+        .to('.msg-5', { opacity: 1, y: 0, duration: 0.2 }, 2.4)
+        .to('.msg-6', { opacity: 1, y: 0, duration: 0.2 }, 2.6);
 
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-24 relative">
+      // Subtle phone floating animation
+      gsap.to('.phone-3d', {
+        y: -15,
+        rotateX: 2,
+        rotateY: -2,
+        duration: 2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1
+      });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, { scope: containerRef });
+
+  return (
+    <section ref={containerRef} className="relative h-screen w-full" id="problem">
+      <div className="bg-container absolute inset-0 w-full h-full bg-white transition-colors duration-0" />
+      
+      <div className="relative h-full w-full flex flex-col lg:flex-row items-center justify-center px-6 lg:p-12 overflow-hidden z-10 pt-24 pb-8 lg:pt-12 lg:pb-12">
+        
+        {/* Left Typography Section */}
+        <div className="w-full lg:w-1/2 flex items-start lg:items-center justify-center relative h-[220px] sm:h-[260px] lg:h-full z-20 shrink-0">
           
-          {/* ─── MOBILE: STICKY PHONE MOCKUP ─── */}
-          <div className="flex lg:hidden justify-center sticky top-[80px] z-10 pt-4 pointer-events-none h-[500px]">
-             <div className="scale-[0.7] transform origin-top shadow-2xl rounded-[40px]">
-               <PhoneMockup activeStep={activeStep} />
-             </div>
+          {/* Block 1 */}
+          <div className="text-block-1 absolute inset-0 flex flex-col items-center lg:items-start justify-start lg:justify-center text-center lg:text-left px-2">
+            <h2 className="split-text text-4xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-tight">
+              Customers <br className="hidden lg:block"/> <span className="text-rose-500">don't wait.</span>
+            </h2>
+            <p className="split-text text-slate-600 mt-4 text-base sm:text-lg lg:text-xl max-w-md mx-auto lg:mx-0">
+              Every missed message at 2 AM is a lost sale. Manual replies can't keep up with modern buyers.
+            </p>
           </div>
 
-          {/* ─── LEFT COLUMN: SCROLLING TEXT NARRATIVE ─── */}
-          <div className="relative pb-[20vh] lg:pb-[50vh] z-20 flex flex-col gap-[60vh] lg:gap-0 mt-[-200px] lg:mt-0 lg:pt-[30vh]">
-            {NARRATIVE_STEPS.map((step, index) => (
-              <NarrativeStep 
-                key={step.id} 
-                step={step} 
-                isActive={activeStep === index} 
-                onInView={() => setActiveStep(index)}
-                isLast={index === NARRATIVE_STEPS.length - 1}
+          {/* Block 2 */}
+          <div className="text-block-2 absolute inset-0 flex flex-col items-center lg:items-start justify-start lg:justify-center text-center lg:text-left px-2">
+            <h2 className="split-text text-4xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+              BizEasy AI <br className="hidden lg:block"/> <span className="text-emerald-400">takes over.</span>
+            </h2>
+            <p className="split-text text-slate-400 mt-4 text-base sm:text-lg lg:text-xl max-w-md mx-auto lg:mx-0">
+              Your intelligent agent wakes up when you sleep. It understands intent and acts instantly.
+            </p>
+          </div>
+
+          {/* Block 3 */}
+          <div className="text-block-3 absolute inset-0 flex flex-col items-center lg:items-start justify-start lg:justify-center text-center lg:text-left px-2">
+            <h2 className="split-text text-4xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+              Instant Checkouts. <br className="hidden lg:block"/> <span className="dynamic-color-span text-white">Zero Effort.</span>
+            </h2>
+            <p className="split-text text-slate-400 mt-4 text-base sm:text-lg lg:text-xl max-w-md mx-auto lg:mx-0">
+              From inquiry to payment in seconds. Automatically generate invoices and close deals 24/7.
+            </p>
+          </div>
+
+        </div>
+
+        {/* Right Phone Mockup Section */}
+        <div className="w-full lg:w-1/2 flex items-center lg:items-center justify-center z-10 flex-1 lg:flex-none overflow-hidden lg:overflow-visible" style={{ perspective: "1000px" }}>
+          <div className="phone-3d relative shrink-0 w-[850px] sm:w-[950px] lg:w-[1000px] xl:w-[1200px] aspect-[1280/853] will-change-transform pointer-events-none mt-4 lg:mt-0">
+            <div className="absolute inset-0 z-10 pointer-events-none">
+              <PhoneMockup hideUI={false} statusBarStyle="black">
+                <div className="relative w-full h-full bg-[#EFEAE2] flex flex-col pointer-events-auto">
+                  {/* Header */}
+                  <div className="bg-[#005c4b] pt-10 pb-3 px-4 flex items-center gap-3 shrink-0 z-20 shadow-md relative">
+                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white font-bold shrink-0">
+                      BE
+                    </div>
+                    <div className="flex-1 relative h-full flex flex-col justify-center">
+                      <h3 className="text-white font-semibold text-[16px] leading-tight flex items-center gap-1">
+                        BizEasy Store
+                      </h3>
+                      
+                      <p className="header-offline text-white/60 text-[11px] absolute top-5 left-0">
+                        last seen today at 10:15 PM
+                      </p>
+                      
+                      <p className="header-online text-[#25D366] text-[11px] absolute top-5 left-0 font-medium flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" /> online
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Chat Background Pattern */}
+                  <div 
+                    className="absolute inset-0 opacity-[0.04] z-0 pointer-events-none" 
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`, backgroundSize: '60px' }} 
+                  />
+
+                  {/* Chat Area */}
+                  <div className="flex-1 overflow-hidden p-4 z-10 relative" style={{ WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%)' }}>
+                    <div className="chat-scroll flex flex-col gap-3 pb-20 will-change-transform">
+                      
+                      <div className="flex justify-center mb-2 mt-4">
+                        <span className="bg-white/80 backdrop-blur border border-black/5 text-slate-500 text-[10px] px-3 py-1 rounded-lg font-medium shadow-sm">TODAY</span>
+                      </div>
+
+                      {/* PHASE 1: CHAOS */}
+                      <div className="msg-1 chat-bubble received">
+                        Bhai size L hai? Urgent hai.
+                        <span className="time">11:46 PM</span>
+                      </div>
+                      
+                      <div className="msg-2 chat-bubble received">
+                        Hello?? Koi hai?
+                        <span className="time">11:55 PM</span>
+                      </div>
+
+                      <div className="lost-sale my-2 flex justify-center w-full">
+                        <div className="bg-rose-50 border border-rose-100 text-rose-600 px-3 py-1.5 rounded-full text-[11px] font-bold shadow-sm flex items-center gap-1.5">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          Sale Lost (You were asleep)
+                        </div>
+                      </div>
+
+                      {/* PHASE 2: ACTIVATION */}
+                      <div className="activation my-3 flex justify-center w-full">
+                        <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-2xl text-xs font-bold shadow-lg shadow-emerald-500/25 flex items-center gap-2">
+                          <Zap className="w-4 h-4 fill-white" />
+                          BizEasy AI Active
+                        </div>
+                      </div>
+
+                      {/* PHASE 3: SOLUTION */}
+                      <div className="msg-3 chat-bubble received">
+                        I want to buy the linen shirt in Size L. Is it available?
+                        <span className="time">2:14 AM</span>
+                      </div>
+
+                      <div className="msg-4 chat-bubble sent">
+                        <p className="mb-2">Hi! Size L is in stock. Here is your checkout link:</p>
+                        
+                        <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden w-full min-w-[200px]">
+                            <div className="h-24 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center relative border-b border-black/5">
+                              <span className="text-4xl drop-shadow-sm">👕</span>
+                              <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-slate-900 text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm">₹1,890</div>
+                            </div>
+                            <div className="p-2.5">
+                              <p className="text-[13px] font-bold text-slate-800">Classic Linen Shirt (L)</p>
+                              <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">Secure UPI Checkout</p>
+                            </div>
+                            <div className="border-t border-black/5 px-3 py-2.5 bg-emerald-50/50">
+                              <p className="text-emerald-600 text-[12px] font-bold text-center w-full flex items-center justify-center gap-1.5">
+                                Pay via UPI <ArrowRight className="w-3.5 h-3.5" />
+                              </p>
+                            </div>
+                        </div>
+                        <span className="time self-end mt-1 text-emerald-600/70">2:14 AM ✓✓</span>
+                      </div>
+
+                      <div className="msg-5 chat-bubble received">
+                        Paid ✅
+                        <span className="time">2:16 AM</span>
+                      </div>
+
+                      <div className="msg-6 chat-bubble sent">
+                        <p className="mb-2 text-emerald-800 font-medium flex items-center gap-1 text-[12px]">
+                          <ShieldCheck className="w-4 h-4 text-emerald-600" /> Payment Verified
+                        </p>
+                        <div className="bg-white p-2 rounded-xl border border-black/5 flex items-center gap-3 shadow-sm">
+                            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+                              <Receipt className="w-4 h-4" />
+                            </div>
+                            <div className="pr-2">
+                              <p className="text-[12px] font-bold text-slate-800">GST_Invoice.pdf</p>
+                              <p className="text-[10px] text-slate-500 font-medium">Ready to ship</p>
+                            </div>
+                        </div>
+                        <span className="time self-end mt-1 text-emerald-600/70">2:16 AM ✓✓</span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Input Area */}
+                  <div className="bg-[#f0f2f5] p-3 flex items-center gap-2 shrink-0 z-20 border-t border-black/5 relative pb-6 lg:pb-8">
+                    <div className="flex-1 bg-white h-9 rounded-full border border-black/5 flex items-center px-4 shadow-sm">
+                      <span className="text-slate-400 text-[13px]">Message...</span>
+                    </div>
+                    <div className="w-9 h-9 bg-[#00a884] rounded-full flex items-center justify-center shrink-0 shadow-sm text-white">
+                      <svg className="w-4 h-4 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                    </div>
+                  </div>
+                </div>
+              </PhoneMockup>
+              <Image 
+                src="/assets/phone-frame-v2.png"
+                alt="Hand holding phone"
+                fill
+                className="object-contain object-center filter brightness-110 contrast-125 saturate-110 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
+                priority
               />
-            ))}
+            </div>
           </div>
-
-          {/* ─── DESKTOP RIGHT COLUMN: STICKY PHONE MOCKUP ─── */}
-          <div className="hidden lg:flex items-center justify-center sticky top-0 h-[100dvh] w-full z-10 pointer-events-none">
-            <PhoneMockup activeStep={activeStep} />
-          </div>
-
         </div>
       </div>
+      
+      {/* Styles for chat bubbles to keep the JSX clean */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .chat-bubble {
+          position: relative;
+          padding: 8px 12px;
+          border-radius: 12px;
+          font-size: 13px;
+          line-height: 1.4;
+          color: #111B21;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+          width: max-content;
+          max-width: 85%;
+          display: flex;
+          flex-direction: column;
+          transform-origin: bottom left;
+        }
+        .chat-bubble.received {
+          align-self: flex-start;
+          background: #ffffff;
+          border-top-left-radius: 4px;
+          border: 1px solid rgba(0,0,0,0.02);
+        }
+        .chat-bubble.sent {
+          align-self: flex-end;
+          background: #d9fdd3;
+          border-top-right-radius: 4px;
+          border: 1px solid rgba(217,253,211,0.5);
+          transform-origin: bottom right;
+        }
+        .chat-bubble .time {
+          font-size: 10px;
+          color: #667781;
+          align-self: flex-end;
+          margin-top: 2px;
+          margin-left: 12px;
+        }
+      `}} />
     </section>
-  );
-}
-
-// ─── NARRATIVE STEP COMPONENT ───
-function NarrativeStep({ step, isActive, onInView, isLast }: { step: any, isActive: boolean, onInView: () => void, isLast: boolean }) {
-  return (
-    <motion.div 
-      className={cn(
-        "flex flex-col justify-center min-h-[40vh] lg:min-h-[80vh] transition-opacity duration-700 max-w-lg mx-auto lg:mx-0",
-        "bg-white/95 backdrop-blur-md lg:bg-transparent p-6 lg:p-0 rounded-2xl lg:rounded-none shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] lg:shadow-none border border-slate-200/60 lg:border-transparent",
-        isActive ? "opacity-100" : "opacity-30 blur-[2px]"
-      )}
-      onViewportEnter={() => {
-        // Use a slightly wider margin so it triggers nicely
-        onInView();
-      }}
-      viewport={{ margin: "-40% 0px -40% 0px" }}
-    >
-      <div className={cn(
-        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-bold uppercase tracking-wider mb-6 w-max shadow-sm",
-        step.iconBg, step.iconColor
-      )}>
-        <step.icon className="w-3.5 h-3.5" />
-        <span>{step.title}</span>
-      </div>
-      <h2 className="text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] mb-6 font-outfit text-slate-900">
-        {step.subtitle.split(" ").map((word: string, i: number, arr: string[]) => 
-          i === arr.length - 1 || i === arr.length - 2 ? (
-            <span key={i} className={cn("font-fraunces italic font-normal", step.iconColor)}> {word}</span>
-          ) : (
-            <span key={i}> {word}</span>
-          )
-        )}
-      </h2>
-      <p className="text-slate-600 text-lg leading-relaxed mb-8">
-        {step.description}
-      </p>
-
-      {isLast && (
-        <motion.a 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
-          href="#pricing" 
-          className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3.5 rounded-xl font-bold text-sm shadow-xl shadow-slate-900/20 hover:scale-105 hover:shadow-slate-900/30 transition-all w-max pointer-events-auto"
-        >
-          Deploy Your Bot <ArrowRight className="w-4 h-4" />
-        </motion.a>
-      )}
-    </motion.div>
-  );
-}
-
-// ─── REALISTIC PHONE MOCKUP ───
-function PhoneMockup({ activeStep }: { activeStep: number }) {
-  return (
-    <div className="relative w-[320px] h-[650px] shrink-0 pointer-events-auto">
-      {/* Outer Hardware Frame */}
-      <div className="absolute inset-0 bg-slate-900 rounded-[54px] shadow-[0_0_0_4px_#e2e8f0,0_20px_40px_-15px_rgba(0,0,0,0.3)] box-border">
-        {/* Buttons */}
-        <div className="absolute top-[120px] -left-[6px] w-[3px] h-[30px] bg-slate-300 rounded-l-md" />
-        <div className="absolute top-[170px] -left-[6px] w-[3px] h-[60px] bg-slate-300 rounded-l-md" />
-        <div className="absolute top-[240px] -left-[6px] w-[3px] h-[60px] bg-slate-300 rounded-l-md" />
-        <div className="absolute top-[180px] -right-[6px] w-[3px] h-[80px] bg-slate-300 rounded-r-md" />
-
-        {/* Inner Screen */}
-        <div className="absolute inset-[8px] bg-[#EFEAE2] rounded-[46px] overflow-hidden flex flex-col">
-          
-          {/* Dynamic Island */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[90px] h-[26px] bg-black rounded-full z-50 flex items-center justify-between px-2">
-            <div className="w-2 h-2 rounded-full bg-slate-800" />
-            <div className="w-2 h-2 rounded-full bg-emerald-900/50 flex items-center justify-center">
-              <div className="w-1 h-1 rounded-full bg-emerald-500 shadow-[0_0_4px_#10b981]" />
-            </div>
-          </div>
-
-          {/* iOS Status Bar */}
-          <div className="h-12 bg-[#075E54] w-full flex justify-between items-end px-6 pb-2 text-[10px] text-white font-medium z-40 pt-2">
-            <span>11:46</span>
-            <div className="flex gap-1.5 items-center">
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21L24 3h-24z"/></svg>
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20v-20z"/></svg>
-              <div className="w-5 h-2.5 border border-white rounded-[3px] p-[1px] relative">
-                 <div className="bg-white h-full w-[80%] rounded-[1px]" />
-              </div>
-            </div>
-          </div>
-
-          {/* WhatsApp Header */}
-          <div className="bg-[#075E54] px-4 py-2 flex items-center gap-3 shadow-sm z-30 shrink-0">
-            <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white font-bold text-xs relative overflow-hidden border border-white/20">
-              <span className="relative z-10">BE</span>
-            </div>
-            <div className="flex-1">
-              <h3 className="text-white font-semibold text-[13px] leading-tight flex items-center gap-1">
-                BizEasy Store 
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#25D366] fill-white" />
-              </h3>
-              <p className="text-white/70 text-[10px]">online</p>
-            </div>
-            <div className="flex gap-4 text-white">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-            </div>
-          </div>
-
-          {/* Chat Background Pattern */}
-          <div 
-            className="absolute inset-0 opacity-[0.04] z-10 pointer-events-none" 
-            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`, backgroundSize: '60px' }} 
-          />
-
-          {/* Chat Area */}
-          <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2.5 z-20 pb-20 no-scrollbar">
-            <div className="flex justify-center mb-1">
-              <span className="bg-white/60 backdrop-blur-sm border border-black/5 text-[#54656F] text-[10px] px-2.5 py-1 rounded-lg font-medium shadow-sm">TODAY</span>
-            </div>
-
-            <AnimatePresence mode="popLayout">
-              {/* STEP 0: Customer queries */}
-              {activeStep >= 0 && (
-                <ChatBubble key="q1" delay={0.1} isSelf>
-                  Bhai linen shirt size L available hai? 
-                </ChatBubble>
-              )}
-              {activeStep >= 0 && (
-                <ChatBubble key="q2" delay={0.3} isSelf>
-                  Urgent order place karna hai 
-                </ChatBubble>
-              )}
-              {activeStep >= 0 && (
-                <ChatBubble key="q3" delay={0.5} isSelf time="11:48 PM">
-                  Total kitna hua?
-                </ChatBubble>
-              )}
-
-              {/* STEP 1: Bot Replies */}
-              {activeStep >= 1 && (
-                <ChatBubble key="a1" delay={0.1} isSelf={false}>
-                  Hi! 👋 Size L is in stock. Here is your instant checkout link:
-                </ChatBubble>
-              )}
-              {activeStep >= 1 && (
-                <motion.div
-                  key="product-card"
-                  initial={{ opacity: 0, scale: 0.9, y: 10, originX: 0 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.3 }}
-                  className="self-start bg-white rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.1)] border border-black/5 overflow-hidden w-[220px]"
-                >
-                  <div className="h-[100px] bg-slate-100 flex items-center justify-center relative border-b border-black/5">
-                     <span className="text-4xl">👕</span>
-                     <div className="absolute top-2 right-2 bg-white/90 backdrop-blur text-slate-900 text-[9px] px-2 py-0.5 rounded-full font-bold shadow-sm">₹1,890</div>
-                  </div>
-                  <div className="p-2.5">
-                    <p className="text-xs font-bold text-slate-800">Classic Linen Shirt (L)</p>
-                    <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">Secure UPI Checkout via Razorpay</p>
-                  </div>
-                  <div className="border-t border-black/5 px-3 py-2.5 bg-emerald-50 hover:bg-emerald-100 transition-colors cursor-pointer">
-                    <p className="text-emerald-700 text-[11px] font-bold text-center w-full">Pay via UPI</p>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* STEP 2: Payment & Auto Execution */}
-              {activeStep >= 2 && (
-                <ChatBubble key="q4" delay={0.1} isSelf time="11:51 PM">
-                  Paid ✅
-                </ChatBubble>
-              )}
-              {activeStep >= 2 && (
-                <motion.div
-                  key="invoice-card"
-                  initial={{ opacity: 0, scale: 0.9, y: 10, originX: 0 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.3 }}
-                  className="self-start bg-white p-2 rounded-xl rounded-tl-sm shadow-[0_1px_2px_rgba(0,0,0,0.1)] border border-black/5 flex items-center gap-3 w-max max-w-[85%]"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-rose-50 border border-rose-100 text-rose-500 flex items-center justify-center shrink-0">
-                    <Receipt className="w-5 h-5" />
-                  </div>
-                  <div className="pr-2">
-                    <p className="text-[11px] font-bold text-slate-800">GST_Invoice_#1048.pdf</p>
-                    <p className="text-[9px] text-slate-500 font-medium">1.4s Verified • Ready to ship</p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Input Area */}
-          <div className="bg-[#F0F2F5] p-2 flex items-center gap-2 shrink-0 z-30 pb-6 border-t border-black/5 relative">
-            <div className="flex-1 bg-white h-9 rounded-full border border-black/5 flex items-center px-4 shadow-sm">
-              <span className="text-slate-400 text-[11px]">Message...</span>
-            </div>
-            <div className="w-9 h-9 bg-[#00A884] rounded-full flex items-center justify-center shrink-0 shadow-sm">
-              <svg className="w-4 h-4 text-white ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-            </div>
-
-            {/* STEP 3 Overlay: The Morning After */}
-            <AnimatePresence>
-              {activeStep >= 3 && (
-                <motion.div 
-                  key="morning-report-overlay"
-                  initial={{ opacity: 0, y: "100%", filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: "0%", filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: "100%" }}
-                  transition={{ type: "spring", stiffness: 150, damping: 25 }}
-                  className="absolute bottom-0 left-0 w-full bg-white/80 backdrop-blur-xl border-t border-white/40 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-5 pb-8 rounded-t-3xl z-40"
-                >
-                  <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4" />
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-500">
-                      <TrendingUp className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900">Morning Report</h4>
-                      <p className="text-[10px] text-slate-500">11:00 PM - 7:00 AM</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center bg-slate-50/50 p-2.5 rounded-xl border border-slate-100">
-                       <span className="text-xs text-slate-600 font-medium">Orders Auto-Processed</span>
-                       <span className="text-sm font-black text-slate-900">14</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-emerald-50/30 p-2.5 rounded-xl border border-emerald-100/50">
-                       <span className="text-xs text-slate-600 font-medium">Revenue Secured</span>
-                       <span className="text-sm font-black text-emerald-600">₹18,450</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full py-3 mt-4 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-lg shadow-slate-900/20">
-                    Open Dashboard
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── CHAT BUBBLE COMPONENT ───
-function ChatBubble({ children, isSelf = false, delay = 0, time = "11:46 PM" }: { children: React.ReactNode, isSelf?: boolean, delay?: number, time?: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 10, originX: isSelf ? 1 : 0 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20, delay }}
-      className={cn(
-        "relative px-3 py-2 rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.05)] max-w-[80%] text-[13px] leading-[1.3] text-[#111B21]",
-        isSelf 
-          ? "self-end bg-[#D9FDD3] rounded-tr-sm border border-[#D9FDD3]/50" 
-          : "self-start bg-white rounded-tl-sm border border-black/5"
-      )}
-    >
-      <div className="mr-6">{children}</div>
-      <div className="absolute bottom-1.5 right-2 flex items-center gap-1">
-        <span className="text-[9px] text-[#667781] leading-none">{time}</span>
-        {isSelf && <span className="text-[10px] text-[#53BDEB] leading-none tracking-tighter">✓✓</span>}
-      </div>
-    </motion.div>
   );
 }

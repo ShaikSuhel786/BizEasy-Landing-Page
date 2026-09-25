@@ -1,10 +1,4 @@
 ﻿"use client";
-// ─── BizEasy Section: FAQ ─────────────────────────────────────────────────────
-// Checklist items covered: H1 (cost), H2 (data security), H3 (switching), H4 (support)
-// Design: Clean accordion. No decoration. Restraint.
-// Motion reason: State Transition (accordion open/close)
-// Built on Base UI Accordion (already in project: @base-ui/react)
-// Informed by: 21st.dev search "faq accordion clean minimal" (IDs 24849, 23530, 24907)
 
 import { useRef } from "react";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
@@ -80,7 +74,7 @@ export default function FAQ() {
               fontFamily: "var(--font-outfit, sans-serif)",
             }}
           >
-            Straight answers.
+            FAQs
           </h2>
         </motion.div>
 
