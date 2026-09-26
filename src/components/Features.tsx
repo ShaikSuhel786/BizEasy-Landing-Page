@@ -3,7 +3,6 @@
 import { MessageCircle, Receipt, IndianRupee, ArrowRight, CheckCircle2, FileText, Zap } from "lucide-react";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { cn } from "./Problem";
 
 const EXPO_OUT = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -23,7 +22,7 @@ export default function Features() {
   // Fluid Section Entrance (Webflow style)
   const { scrollYProgress: entryProgress } = useScroll({
     target: wrapperRef,
-    offset: ["start end", "start top"]
+    offset: ["start end", "start start"]
   });
 
   const borderRadius = useTransform(entryProgress, [0, 1], ["48px", "0px"]);

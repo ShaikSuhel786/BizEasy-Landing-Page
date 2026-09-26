@@ -34,20 +34,36 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
 
   useGSAP(() => {
     if (stage === 2) {
-      gsap.to(bgRef.current, {
-        scrollTrigger: {
-          trigger: stageRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-          invalidateOnRefresh: true,
+      // 1. Webflow-style Hero Card Morph (Scale + Bottom Border Radius Morph + Elevation on Scroll)
+      gsap.fromTo(
+        bgRef.current,
+        {
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          scale: 1,
         },
-        scale: () => {
-          const gap = window.innerWidth < 640 ? 32 : 64; // 16px gap on mobile, 32px gap on desktop
-          return (window.innerWidth - gap) / window.innerWidth;
-        },
-        ease: "none"
-      });
+        {
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+          scale: () => {
+            const gap = window.innerWidth < 640 ? 24 : 64; // 12px gap on mobile, 32px gap on desktop
+            return (window.innerWidth - gap) / window.innerWidth;
+          },
+          borderBottomLeftRadius: () => {
+            return window.innerWidth < 640 ? 40 : 80;
+          },
+          borderBottomRightRadius: () => {
+            return window.innerWidth < 640 ? 40 : 80;
+          },
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          ease: "none",
+        }
+      );
 
       // 2. Parallax Phone/Hand with direct scrub
       gsap.to(phoneWrapperRef.current, {
@@ -55,7 +71,7 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
           trigger: stageRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
         y: -140,
         ease: "none"
@@ -69,7 +85,11 @@ export default function Hero({ setStage, stage }: { setStage: (v: number) => voi
       <div className="relative w-full flex flex-col items-center justify-start z-0">
         <div 
           ref={bgRef}
-          className="w-full origin-top flex flex-col items-center overflow-hidden relative bg-[#f4f5f6] min-h-[100vh] rounded-b-[48px] sm:rounded-b-[64px] will-change-transform"
+          className="w-full origin-top flex flex-col items-center overflow-hidden relative bg-[#f4f5f6] min-h-[100vh] rounded-b-none will-change-[transform,border-radius]"
+          style={{
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+          }}
         >
           <SilkBlendGradient visible={stage >= 2} />
 

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRef } from "react";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
@@ -48,7 +48,7 @@ export default function FAQ() {
     <section
       id="faq"
       ref={sectionRef}
-      className="relative py-24 md:py-32"
+      className="relative py-12 md:py-16"
       style={{ background: "var(--biz-canvas)" }}
     >
       <div className="mx-auto max-w-2xl px-6 lg:px-8">

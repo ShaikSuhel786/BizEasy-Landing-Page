@@ -8,19 +8,27 @@ import Problem from "@/components/Problem";
 import Features from "@/components/Features";
 // import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
+import Footer from "@/components/Footer";
 
 export default function LandingPage() {
   const [stage, setStage] = useState(0);
 
   return (
-    <main className="relative min-h-screen bg-white">
+    <main className="relative min-h-screen bg-zinc-950">
       <Nav stage={stage} />
-      <Hero stage={stage} setStage={setStage} />
-      <Problem />
-      {/* <SocialProof /> */}
-      <Features />
-      {/* <Pricing /> */}
-      <FAQ />
+      
+      <div className="relative z-10 bg-white rounded-b-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <Hero stage={stage} setStage={setStage} />
+        <Problem />
+        {/* <SocialProof /> */}
+        <Features />
+        {/* <Pricing /> */}
+        <FAQ />
+      </div>
+      
+      <div className="relative z-0">
+        <Footer />
+      </div>
     </main>
   );
 }
