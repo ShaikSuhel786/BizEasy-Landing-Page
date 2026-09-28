@@ -18,11 +18,11 @@ export default function HeroContent({ stage }: { stage: number }) {
         }}
         className="max-w-4xl w-full flex flex-col items-center mb-3.5 sm:mb-4.5 relative z-10"
       >
-        {/* Desktop Line 1: "Never lose a WhatsApp" -> Wraps to 2 lines on mobile ("Never lose a" / "WhatsApp") */}
+        {/* Desktop Line 1: "Handle Every WhatsApp" -> Wraps to 2 lines on mobile ("Handle Every" / "WhatsApp") */}
         <div className="flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-1 sm:gap-y-0">
-          {/* Mobile Line 1: "Never lose a" */}
+          {/* Mobile Line 1: "Handle Every" */}
           <div className="flex flex-nowrap justify-center items-center gap-x-2 sm:gap-x-3">
-            {["Never", "lose", "a"].map((word) => (
+            {["Handle", "Every"].map((word) => (
               <div key={word} className="flex">
                 {word.split("").map((char, j) => (
                   <div key={j} className="overflow-hidden pb-2 -mb-2 px-[1px]">
@@ -31,7 +31,7 @@ export default function HeroContent({ stage }: { stage: number }) {
                         hidden: { y: "120%", rotate: 8, opacity: 0 },
                         visible: { y: "0%", rotate: 0, opacity: 1, transition: EXPO_OUT }
                       }}
-                      className="text-[44px] xs:text-[48px] sm:text-[60px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
+                      className="text-[36px] xs:text-[42px] sm:text-[54px] md:text-[64px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
                       style={{ fontFamily: 'var(--font-outfit), sans-serif' }}
                     >
                       {char}
@@ -85,7 +85,7 @@ export default function HeroContent({ stage }: { stage: number }) {
                     hidden: { y: "120%", rotate: 8, opacity: 0 },
                     visible: { y: "0%", rotate: 0, opacity: 1, transition: EXPO_OUT }
                   }}
-                  className="text-[44px] xs:text-[48px] sm:text-[60px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
+                  className="text-[36px] xs:text-[42px] sm:text-[54px] md:text-[64px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
                   style={{ fontFamily: 'var(--font-outfit), sans-serif' }}
                 >
                   {char}
@@ -95,9 +95,9 @@ export default function HeroContent({ stage }: { stage: number }) {
           </div>
         </div>
 
-        {/* Mobile Line 3, Desktop Line 2: "order again." */}
+        {/* Mobile Line 3, Desktop Line 2: "Order. Automatically." */}
         <div className="flex flex-nowrap justify-center items-center gap-x-2 sm:gap-x-3 mt-1 sm:mt-2 lg:mt-2.5">
-          {["order", "again."].map((word) => (
+          {["Order.", "Automatically."].map((word) => (
             <div key={word} className="flex">
               {word.split("").map((char, j) => (
                 <div key={j} className="overflow-hidden pb-2 -mb-2 px-[1px]">
@@ -106,7 +106,7 @@ export default function HeroContent({ stage }: { stage: number }) {
                       hidden: { y: "120%", rotate: 8, opacity: 0 },
                       visible: { y: "0%", rotate: 0, opacity: 1, transition: EXPO_OUT }
                     }}
-                    className="text-[44px] xs:text-[48px] sm:text-[60px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
+                    className="text-[36px] xs:text-[42px] sm:text-[54px] md:text-[64px] lg:text-[72px] font-bold tracking-tighter leading-[1.0] text-white inline-block origin-bottom-left"
                     style={{ fontFamily: 'var(--font-outfit), sans-serif' }}
                   >
                     {char}
@@ -124,7 +124,7 @@ export default function HeroContent({ stage }: { stage: number }) {
         transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="text-white/80 text-sm sm:text-base lg:text-[17px] max-w-[540px] mx-auto font-medium text-center mt-1 mb-4 sm:mb-5 leading-relaxed relative z-10"
       >
-        We automate your WhatsApp ordering, UPI payments, and GST invoicing without limits, for a fixed price.
+        Give your WhatsApp a sales agent that answers customers, takes orders, collects payments, and sends GST invoices - 24/7.
       </motion.p>
 
       <motion.div
@@ -139,7 +139,7 @@ export default function HeroContent({ stage }: { stage: number }) {
           <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
           </svg>
-          Start free on WhatsApp
+          Get Your Free AI Agent
         </button>
 
         {/* Trust Strip */}
