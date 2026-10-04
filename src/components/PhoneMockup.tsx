@@ -48,6 +48,7 @@ export function PhoneMockup({
               }
               alt="iPhone 16 Pro Status Bar"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-contain object-top pointer-events-none"
               priority
               draggable={false}

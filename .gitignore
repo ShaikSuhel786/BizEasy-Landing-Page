@@ -15,3 +15,10 @@ docs/
 dist/
 frames/
 animation_ref.mp4
+.agent/
+.gsd/
+.gemini/
+adapters/
+PROJECT_RULES.md
+GSD-STYLE.md
+model_capabilities.yaml

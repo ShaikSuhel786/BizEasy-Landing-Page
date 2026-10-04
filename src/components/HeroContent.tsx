@@ -18,9 +18,7 @@ export default function HeroContent({ stage }: { stage: number }) {
         }}
         className="max-w-4xl w-full flex flex-col items-center mb-3.5 sm:mb-4.5 relative z-10"
       >
-        {/* Desktop Line 1: "Handle Every WhatsApp" -> Wraps to 2 lines on mobile ("Handle Every" / "WhatsApp") */}
         <div className="flex flex-wrap justify-center items-center gap-x-2.5 sm:gap-x-3.5 gap-y-1 sm:gap-y-0">
-          {/* Mobile Line 1: "Handle Every" */}
           <div className="flex flex-nowrap justify-center items-center gap-x-2 sm:gap-x-3">
             {["Handle", "Every"].map((word) => (
               <div key={word} className="flex">
@@ -42,9 +40,7 @@ export default function HeroContent({ stage }: { stage: number }) {
             ))}
           </div>
           
-          {/* Mobile Line 2, Desktop Line 1 end: "WhatsApp" */}
           <div className="relative flex">
-            {/* Glowing Arched Underline */}
             <div className="absolute -bottom-3 sm:-bottom-4 left-0 w-full h-6 sm:h-8 pointer-events-none z-0">
               <svg 
                 viewBox="0 0 400 100"
@@ -95,7 +91,6 @@ export default function HeroContent({ stage }: { stage: number }) {
           </div>
         </div>
 
-        {/* Mobile Line 3, Desktop Line 2: "Order. Automatically." */}
         <div className="flex flex-nowrap justify-center items-center gap-x-2 sm:gap-x-3 mt-1 sm:mt-2 lg:mt-2.5">
           {["Order.", "Automatically."].map((word) => (
             <div key={word} className="flex">
@@ -133,7 +128,7 @@ export default function HeroContent({ stage }: { stage: number }) {
         transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="pointer-events-auto flex flex-col items-center gap-2.5 relative z-10"
       >
-        {/* Primary CTA with Emil's responsive tactile feedback */}
+        {/* Primary CTA */}
         <button className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-white text-[#0f172a] font-bold rounded-full text-sm sm:text-base shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.35)] hover:-translate-y-0.5 active:scale-[0.97] transition-[transform,box-shadow] duration-160 ease-out overflow-hidden cursor-pointer select-none">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]" />
           <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
@@ -166,7 +161,7 @@ export default function HeroContent({ stage }: { stage: number }) {
               </div>
               <span className="font-bold">4.9/5</span>
             </span>
-            <span className="text-white/70 text-[11px] sm:text-xs">Trusted by 10,000+ Indian Sellers</span>
+            <span className="text-white/70 text-[11px] sm:text-xs">1 platform for all your Social Media Order </span>
           </div>
         </div>
       </motion.div>

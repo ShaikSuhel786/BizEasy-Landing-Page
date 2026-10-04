@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Problem from "@/components/Problem";
+import NarrativeSection from "@/components/NarrativeSection";
 // import SocialProof from "@/components/SocialProof";
 import Features from "@/components/Features";
 // import Pricing from "@/components/Pricing";
@@ -19,7 +19,7 @@ export default function LandingPage() {
       
       <div className="relative z-10 bg-white rounded-b-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <Hero stage={stage} setStage={setStage} />
-        <Problem />
+        <NarrativeSection />
         {/* <SocialProof /> */}
         <Features />
         {/* <Pricing /> */}
