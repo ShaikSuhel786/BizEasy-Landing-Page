@@ -22,7 +22,7 @@ export default function EcosystemNarrative() {
   const scene3Ref = useRef<HTMLDivElement>(null);
 
   // New refs for micro-interactions
-  const chartPathRef = useRef<SVGPathElement>(null);
+  const chartPathRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLDivElement>(null);
 
