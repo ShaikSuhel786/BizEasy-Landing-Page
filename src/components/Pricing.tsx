@@ -276,7 +276,7 @@ export default function Pricing() {
           className="text-center text-sm mt-10"
           style={{ color: "var(--biz-steel)" }}
         >
-          Hit the 50-order limit? Upgrade to Pro in one tap — your catalogue and orders move with you.
+          Hit the 50-order limit? Upgrade to Pro in one tap - your catalogue and orders move with you.
         </motion.p>
       </div>
     </section>
